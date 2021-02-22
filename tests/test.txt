@@ -1,9 +1,35 @@
 compil Algorithme()
 {
-intCompil gh,gh;
+    //single line comment
 
-start
+    /* multi
+       line
+       comment
+    */
+    intCompil gh,gh;
+    floatCompil lp;
+    stringCompil str;
 
-gh = (2 + 3 + -3 *-3/4*7);
+    start
+
+        gh = 2 + -3 + 5 / -10;
+        gh = 2 + -3 + 5 / -10;
+        gh = 2 + -3 + 5 / -10;
+
+
+        if(a>b) then {
+
+            gh = 2;
+        }else {
+
+            f=2;
+        }
+
+
+        do {
+
+            p = 2;
+        }while(term1 != 10)
+
 
 }
