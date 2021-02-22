@@ -1,0 +1,9 @@
+compil Algorithme()
+{
+intCompil gh,gh;
+
+start
+
+gh = (2 + 3 + -3 *-3/4*7);
+
+}
