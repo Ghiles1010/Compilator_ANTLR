@@ -17,7 +17,7 @@ compil Algorithme()
         gh = 2 + -3 + 5 / -10;
 
 
-        if(a>b) then {
+        if( a/2*3 > b+83/4 ) then {
 
             gh = 2;
         }else {
@@ -30,6 +30,8 @@ compil Algorithme()
 
             p = 2;
         }while(term1 != 10)
+
+        a=b;
 
 
 }
