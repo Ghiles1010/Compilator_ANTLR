@@ -6,9 +6,9 @@ compil Algorithme()
        line
        comment
     */
-    intCompil gh,gh;
-    floatCompil lp;
-    stringCompil str;
+    intCompil car, i;
+    floatCompil lp, i;
+    stringCompil str, j;
 
     start
 

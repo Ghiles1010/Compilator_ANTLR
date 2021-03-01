@@ -1,8 +1,6 @@
 grammar Lang;
 
-
 COMPIL : 'compil';
-
 
 AO : '{';
 AF : '}';
@@ -50,7 +48,6 @@ COMMENT_M : '/*'.+?'*/' -> skip;
 
 NOM_PROGRAMME : [A-Z][A-Za-z0-9_]*;
 ID : [A-Za-z][A-Za-z0-9_]*;
-
 
 WS : [ \r\t\n]+ -> skip ;
 
