@@ -8,11 +8,13 @@ compil Algorithme()
     */
     intCompil car, i, z;
     floatCompil lp, i, j;
-    stringCompil str, j,z;
+    stringCompil str, j,z,x;
 
     start
 
         gh = (((2) + (-3)) + ((5) / -10))+e;
+
+        x = "hi";
 
 
 }

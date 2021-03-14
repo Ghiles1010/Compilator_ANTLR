@@ -3,6 +3,8 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import semantic.Program;
+import semantic.Quadruplet;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +23,11 @@ public class Launch {
         ParseTree tree = parser.root();
 
         Visitors visitors = new Visitors();
-        visitors.visit(tree);
+        Program program = (Program) visitors.visit(tree);
+
+        program.getError_table().print();
+        program.getQuad_table().print();
+
 
 
     }

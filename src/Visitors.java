@@ -1,5 +1,8 @@
 import semantic.*;
-import semantic.Error;
+import semantic.Errors.Error;
+import semantic.Errors.Error_Duplicate;
+import semantic.Errors.Error_Table;
+import semantic.Errors.Error_Undeclared;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +17,10 @@ public class Visitors extends LangBaseVisitor {
     private ArrayList<Error> semantic_errors;
     private Map<String, Integer> priority;
     private ArrayList<Quadruplet> quadruplets;
-    private Stack<String> postfixe;
+    private Stack<String> postfix;
+
+    //this is used to check types
+    private String current_type;
 
     private int t_counter;
 
@@ -28,7 +34,7 @@ public class Visitors extends LangBaseVisitor {
         this.semantic_errors = new ArrayList<>();
 
         this.operators = new Stack<>();
-        this.postfixe = new Stack<>();
+        this.postfix = new Stack<>();
 
         this.quadruplets = new ArrayList<>();
 
@@ -43,13 +49,30 @@ public class Visitors extends LangBaseVisitor {
         return priority.get(op1) > priority.get(op2);
     }
 
+    private boolean Compatible_type(String t1, String t2){
+
+        if(t1.equals("stringCompil") && !t2.equals("stringCompil")){
+                return false; }
+
+        if(!t2.equals("floatCompil") && !t2.equals("intCompil")){
+            return false; }
+
+        return true;
+    }
+
+
 
 
 
     @Override
     public Object visitRoot(LangParser.RootContext ctx) {
 
-        return visitChildren(ctx);
+        visitChildren(ctx);
+
+        Quadruplet_Table quadruplet_table = new Quadruplet_Table(quadruplets);
+        Error_Table error_table = new Error_Table(semantic_errors);
+
+        return new Program(quadruplet_table, error_table);
     }
 
 
@@ -65,9 +88,8 @@ public class Visitors extends LangBaseVisitor {
 
             if(symbol_table.symbol_exists(id)){
 
-                Error err = new Error(ERROR_TYPES.DUPLICATE, list_id.getLine());
+                Error err = new Error_Duplicate(list_id.getLine(), id);
                 semantic_errors.add(err);
-                System.out.println("Duplcate error " + id);
 
             }else{
 
@@ -108,7 +130,7 @@ public class Visitors extends LangBaseVisitor {
     @Override
     public Object visitFormule_operand(LangParser.Formule_operandContext ctx) {
 
-        postfixe.push(ctx.operand().getText());
+        postfix.push(ctx.operand().getText());
 
         return visitChildren(ctx);
     }
@@ -157,13 +179,13 @@ public class Visitors extends LangBaseVisitor {
         t_counter++;
         String temporary = "T" + t_counter;
 
-        String op2 = postfixe.pop();
-        String op1 = postfixe.pop();
+        String op2 = postfix.pop();
+        String op1 = postfix.pop();
 
         Quadruplet quad = new Quadruplet(op1, op2, operator, temporary);
         quadruplets.add(quad);
 
-        postfixe.push(temporary);
+        postfix.push(temporary);
     }
 
 
@@ -172,22 +194,24 @@ public class Visitors extends LangBaseVisitor {
 
         String id = ctx.ID().getText();
 
+
+
         if(! symbol_table.symbol_exists(id)){
 
-            System.out.println("Error, "+ id + " not declared");
+            Error err = new Error_Undeclared(ctx.ID().getSymbol().getLine(), id);
+            semantic_errors.add(err);
+        }else {
+
+            current_type = symbol_table.getType(id);
         }
 
         visit(ctx.formule());
 
-        String temp = postfixe.empty() ? "T" + t_counter : postfixe.pop();
+        String temp = postfix.empty() ? "T" + t_counter : postfix.pop();
 
         Quadruplet quad = new Quadruplet("=", temp, null, id);
         quadruplets.add(quad);
 
-        for(Quadruplet q : quadruplets){
-
-            System.out.println(q.toString());
-        }
 
         return null;
     }
@@ -199,8 +223,11 @@ public class Visitors extends LangBaseVisitor {
 
         if(! symbol_table.symbol_exists(id)){
 
-            System.out.println("Error, "+ id + " not declared");
+            Error err = new Error_Undeclared(ctx.ID().getSymbol().getLine(), id);
+            semantic_errors.add(err);
         }
+
+
         return null;
     }
 }

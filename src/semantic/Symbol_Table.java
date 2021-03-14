@@ -22,6 +22,20 @@ public class Symbol_Table {
         return false;
     }
 
+    public String getType(String id){
+
+
+        for(Symbol s : symbols){
+
+            if( s.getId().equals(id) ){
+                return s.getType();
+            }
+        }
+
+        return null;
+    }
+
+
     public void add(Symbol symbol){
         this.symbols.add(symbol);
     }

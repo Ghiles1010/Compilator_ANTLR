@@ -64,6 +64,13 @@ public interface LangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitReel(LangParser.ReelContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code chaine}
+	 * labeled alternative in {@link LangParser#operand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitChaine(LangParser.ChaineContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code idt}
 	 * labeled alternative in {@link LangParser#operand}.
 	 * @param ctx the parse tree

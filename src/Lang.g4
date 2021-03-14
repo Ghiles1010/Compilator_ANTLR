@@ -26,6 +26,7 @@ DIV : '/';
 
 ENTIER : [0-9]+;
 REEL : '-'?[0-9]+('.'[0-9]+)?;
+CHAINE : '"'.*?'"';
 
 GRT : '>';
 LSS : '<';
@@ -69,6 +70,7 @@ list_id : ID VG list_id      #list_id_next
 // operands and operators
 operand : ENTIER #entier
         | REEL #reel
+        | CHAINE #chaine
         | ID #idt;
 
 operator : PLUS | MOINS | DIV | MUL;
