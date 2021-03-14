@@ -16,11 +16,19 @@ public interface LangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRoot(LangParser.RootContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LangParser#declaration}.
+	 * Visit a parse tree produced by the {@code declare}
+	 * labeled alternative in {@link LangParser#declaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDeclaration(LangParser.DeclarationContext ctx);
+	T visitDeclare(LangParser.DeclareContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code declare_empty}
+	 * labeled alternative in {@link LangParser#declaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDeclare_empty(LangParser.Declare_emptyContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LangParser#type}.
 	 * @param ctx the parse tree
@@ -28,17 +36,40 @@ public interface LangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitType(LangParser.TypeContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LangParser#list_id}.
+	 * Visit a parse tree produced by the {@code list_id_next}
+	 * labeled alternative in {@link LangParser#list_id}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitList_id(LangParser.List_idContext ctx);
+	T visitList_id_next(LangParser.List_id_nextContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LangParser#operand}.
+	 * Visit a parse tree produced by the {@code list_id_final}
+	 * labeled alternative in {@link LangParser#list_id}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOperand(LangParser.OperandContext ctx);
+	T visitList_id_final(LangParser.List_id_finalContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code entier}
+	 * labeled alternative in {@link LangParser#operand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEntier(LangParser.EntierContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code reel}
+	 * labeled alternative in {@link LangParser#operand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReel(LangParser.ReelContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code idt}
+	 * labeled alternative in {@link LangParser#operand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdt(LangParser.IdtContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LangParser#operator}.
 	 * @param ctx the parse tree
@@ -46,17 +77,33 @@ public interface LangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitOperator(LangParser.OperatorContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LangParser#formule}.
+	 * Visit a parse tree produced by the {@code formule_operand}
+	 * labeled alternative in {@link LangParser#formule}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFormule(LangParser.FormuleContext ctx);
+	T visitFormule_operand(LangParser.Formule_operandContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link LangParser#formule_pf}.
+	 * Visit a parse tree produced by the {@code formule_parenthesis}
+	 * labeled alternative in {@link LangParser#formule}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFormule_pf(LangParser.Formule_pfContext ctx);
+	T visitFormule_parenthesis(LangParser.Formule_parenthesisContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code formule_operator}
+	 * labeled alternative in {@link LangParser#formule_next}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFormule_operator(LangParser.Formule_operatorContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code formule_empty}
+	 * labeled alternative in {@link LangParser#formule_next}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFormule_empty(LangParser.Formule_emptyContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LangParser#affectation}.
 	 * @param ctx the parse tree

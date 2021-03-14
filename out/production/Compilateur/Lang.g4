@@ -1,6 +1,8 @@
 grammar Lang;
 
+
 COMPIL : 'compil';
+
 
 AO : '{';
 AF : '}';
@@ -49,23 +51,35 @@ COMMENT_M : '/*'.+?'*/' -> skip;
 NOM_PROGRAMME : [A-Z][A-Za-z0-9_]*;
 ID : [A-Za-z][A-Za-z0-9_]*;
 
+
 WS : [ \r\t\n]+ -> skip ;
 
 // Global program
 root : COMPIL NOM_PROGRAMME PO PF AO declaration START body AF EOF;
 
 // Declaration part
-declaration: type list_id PV declaration ||;
+declaration: type list_id PV declaration    #declare
+             |                              #declare_empty;
+
 type : INT | FLOAT | STRING;
-list_id : ID VG list_id | ID;
+
+list_id : ID VG list_id      #list_id_next
+        | ID                 #list_id_final;
 
 // operands and operators
-operand : ENTIER | REEL | ID;
+operand : ENTIER #entier
+        | REEL #reel
+        | ID #idt;
+
 operator : PLUS | MOINS | DIV | MUL;
 
 // Expressions
-formule : operand operator formule| PO formule_pf| operand;
-formule_pf : formule PF | formule PF operator formule;
+formule     : operand formule_next         #formule_operand
+            | PO formule PF formule_next   #formule_parenthesis;
+
+formule_next  : operator formule           #formule_operator
+              |                            #formule_empty;
+
 
 // Affectation
 affectation : ID AFF formule;

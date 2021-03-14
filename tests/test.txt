@@ -6,32 +6,13 @@ compil Algorithme()
        line
        comment
     */
-    intCompil car, i;
-    floatCompil lp, i;
-    stringCompil str, j;
+    intCompil car, i, z;
+    floatCompil lp, i, j;
+    stringCompil str, j,z;
 
     start
 
-        gh = (((2) + (-3)) + ((5) / -10));
-        gh = 2 + -3 + 5 / -10;
-        gh = 2 + -3 + 5 / -10;
-
-
-        if( a/2*3 > b+83/4 ) then {
-
-            gh = 2;
-        }else {
-
-            f=2;
-        }
-
-
-        do {
-
-            p = 2;
-        }while(term1 != 10)
-
-        a=b;
+        gh = (((2) + (-3)) + ((5) / -10))+e;
 
 
 }
