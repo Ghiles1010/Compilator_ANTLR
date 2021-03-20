@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="381605dc-1e1f-4173-98e1-a7f5e1eb7e9b" name="Default Changelist" comment="" />
+    <list default="true" id="381605dc-1e1f-4173-98e1-a7f5e1eb7e9b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Compilateur.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Compilateur.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/Lang.g4" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/Lang.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/META-INF/Compilateur.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/Visitors.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/Visitors.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/semantic/Quadruplet_Table.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/semantic/Quadruplet_Table.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Lang.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Lang.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Visitors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Visitors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/Quadruplet_Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Quadruplet_Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1nTpy7IkqEHkajCFAJSC35XwBAt" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="C:/Personnal/M1/compil/tp/Projet Compil" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/production" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
@@ -30,17 +46,20 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
-      <setting name="path" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workDir" value="file://$PROJECT_DIR$" />
-      <setting name="debug" value="false" />
+    <configuration name="Launch" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Launch" />
+      <module name="Compilateur" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Launch" />
+      </list>
+    </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -54,30 +73,16 @@
     </task>
     <servers />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="96" y="16" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1612168778348">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="96" y="16" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.720@0.0.1280.720" timestamp="1612168778348" />
-    <state x="406" y="164" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1612168242663">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="406" y="164" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.720@0.0.1280.720" timestamp="1612168242663" />
-    <state x="421" y="103" key="FileChooserDialogImpl" timestamp="1612719798130">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="421" y="103" key="FileChooserDialogImpl/0.0.1280.720@0.0.1280.720" timestamp="1612719798130" />
-    <state x="142" y="0" key="SettingsEditor" timestamp="1612169548724">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="142" y="0" key="SettingsEditor/0.0.1280.720@0.0.1280.720" timestamp="1612169548724" />
-    <state x="365" y="185" key="com.intellij.ide.util.TipDialog" timestamp="1612719661189">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="365" y="185" key="com.intellij.ide.util.TipDialog/0.0.1280.720@0.0.1280.720" timestamp="1612719661189" />
-    <state x="0" y="0" width="612" height="720" key="find.popup" timestamp="1612165729910">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="0" y="0" width="612" height="720" key="find.popup/0.0.1280.720@0.0.1280.720" timestamp="1612165729910" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

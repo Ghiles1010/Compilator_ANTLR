@@ -12,9 +12,27 @@ compil Algorithme()
 
     start
 
-        gh = (((2) + (-3)) + ((5) / -10))+e;
 
+      i= lp+j *5;
+
+      if (i*8 > j - (5/7 +i) ) then
+      {
+        gh = ((2 + (-3)) + ((5) / -10))+e;
+        car= i+5;
+      }
+     else{
         x = "hi";
+        j= "souad";
+      }
+      do {
+       x="bonjour";
+       do{
+          i=i+1;
+        }while(car> 2)
+      }while ( i < j*5 +(3-i) )
 
 
+
+
+     lp= i+j;
 }

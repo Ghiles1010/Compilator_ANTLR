@@ -98,9 +98,18 @@ else_ : || ELSE AO body AF;
 
 // Do While
 do_ : DO AO body AF WHILE PO condition PF;
+//read
+read_: READ PO list_id PF PV;
+//print
+print_: PRINT PO operand PF PV;
+
 
 // instruction
-instruction : affectation PV | if_ | do_;
+instruction : affectation PV
+              |read_
+              |print_
+              | if_
+              | do_;
 
 // Body
 body: instruction body ||;
