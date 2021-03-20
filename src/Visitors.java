@@ -38,7 +38,6 @@ public class Visitors extends LangBaseVisitor {
 
         this.quadruplets = new ArrayList<>();
 
-
         this.priority = new HashMap<>() {{
             put("+", 0); put("-", 0); put("*", 1); put("/", 1);
         }};
@@ -81,6 +80,7 @@ public class Visitors extends LangBaseVisitor {
     public Object visitDeclare(LangParser.DeclareContext ctx) {
 
         Id_Info list_id = (Id_Info) visit(ctx.list_id());
+
 
         while (list_id != null){
 
@@ -230,4 +230,7 @@ public class Visitors extends LangBaseVisitor {
 
         return null;
     }
+
+
+
 }

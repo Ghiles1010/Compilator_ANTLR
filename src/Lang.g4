@@ -59,7 +59,7 @@ WS : [ \r\t\n]+ -> skip ;
 root : COMPIL NOM_PROGRAMME PO PF AO declaration START body AF EOF;
 
 // Declaration part
-declaration: type list_id PV declaration    #declare
+declaration: type list_id  PV declaration    #declare
              |                              #declare_empty;
 
 type : INT | FLOAT | STRING;

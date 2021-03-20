@@ -17,4 +17,10 @@ compil Algorithme()
         x = "hi";
 
 
+        do{
+
+            x = 3;
+        }while(a>b)
+
+
 }
