@@ -2,10 +2,12 @@ compil Algorithme()
 {
     //single line comment
 
-    /* multi
+    /*
+       multi
        line
        comment
     */
+
     intCompil car, Iyu, z, I;
     floatCompil lp ;
     stringCompil str, j, x, i;
@@ -13,7 +15,7 @@ compil Algorithme()
     start
 
 
-        i = 2 * 8 + ( -3 * 5 + 7 ) ;
+        i = 2 * 8 - ( -3 * 5 + 7 ) + (2 / 5);
         car = i;
         z = lp;
 

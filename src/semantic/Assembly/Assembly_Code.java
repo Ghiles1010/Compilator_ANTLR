@@ -62,6 +62,17 @@ public class Assembly_Code {
                     Gen("MOVE", "AX", quad.getQ4());
                     AX = quad.getQ4();
                     break;
+
+
+                case "READ":
+                    Gen("INPUT", quad.getQ2());
+                    break;
+
+                case "PRINT" :
+                    Gen("OUTPUT", quad.getQ2());
+                    break;
+
+
             }
 
         }
