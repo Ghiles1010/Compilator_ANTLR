@@ -24,15 +24,15 @@ public class Symbol_Table {
 
     public String getType(String id){
 
-
         for(Symbol s : symbols){
+
 
             if( s.getId().equals(id) ){
                 return s.getType();
             }
         }
 
-        return null;
+        return "";
     }
 
 

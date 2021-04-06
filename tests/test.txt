@@ -10,14 +10,16 @@ compil Algorithme()
 
     intCompil car, Iyu, z, I;
     floatCompil lp ;
-    stringCompil str, j, x, i;
+    intCompil str, j, x, i;
+    stringCompil a;
 
     start
 
 
-        i = 2 * 8 - ( -3 * 5 + 7 ) + (2 / 5);
-        car = i;
-        z = lp;
+        a = 2;
+        i= "hi";
+
+        i = 2 + 2 * 3 / (5 - 9);
 
         scanCompil(x);
         printCompil(x);

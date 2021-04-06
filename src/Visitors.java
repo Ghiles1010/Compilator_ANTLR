@@ -1,9 +1,8 @@
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import semantic.*;
+import semantic.Errors.*;
 import semantic.Errors.Error;
-import semantic.Errors.Error_Duplicate;
-import semantic.Errors.Error_Table;
-import semantic.Errors.Error_Undeclared;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +29,7 @@ public class Visitors extends LangBaseVisitor {
     public Visitors() {
 
         t_counter = 0;
+        current_type = "p";
 
         this.symbol_table= new Symbol_Table();
         this.semantic_errors = new ArrayList<>();
@@ -51,12 +51,23 @@ public class Visitors extends LangBaseVisitor {
 
     private boolean Compatible_type(String t1, String t2){
 
+        if(t1.equals(t2))
+            return true;
+
         if(t1.equals("stringCompil") && !t2.equals("stringCompil")){
                 return false; }
 
         return t2.equals("floatCompil") || t2.equals("intCompil");
     }
 
+    private void Compatible_check(int line, String type1 ,String type2){
+
+        if(! Compatible_type(type1, type2)) {
+
+            Error err = new Error_Type(line, type1, type2);
+            semantic_errors.add(err);
+        }
+    }
 
 
 
@@ -133,10 +144,13 @@ public class Visitors extends LangBaseVisitor {
 
 
 
+
     @Override
     public Object visitFormule_operand(LangParser.Formule_operandContext ctx) {
 
-        postfix.push(ctx.operand().getText());
+        String id = ctx.operand().getText();
+
+        postfix.push(id);
         return visitChildren(ctx);
     }
 
@@ -220,21 +234,7 @@ public class Visitors extends LangBaseVisitor {
         return null;
     }
 
-    @Override
-    public Object visitIdt(LangParser.IdtContext ctx) {
 
-        String id = ctx.id().getText();
-
-        if(! symbol_table.symbol_exists(id)){
-
-            TerminalNode node = (TerminalNode) visit(ctx.id());
-            Error err = new Error_Undeclared(node.getSymbol().getLine(), id);
-            semantic_errors.add(err);
-        }
-
-
-        return null;
-    }
 
 
     @Override
@@ -340,5 +340,58 @@ public class Visitors extends LangBaseVisitor {
         quadruplets.add(quad);
 
         return null;
+    }
+
+    @Override
+    public Object visitIdt(LangParser.IdtContext ctx) {
+
+        String id = ctx.id().getText();
+
+        if(! symbol_table.symbol_exists(id)){
+
+            TerminalNode node = (TerminalNode) visit(ctx.id());
+            Error err = new Error_Undeclared(node.getSymbol().getLine(), id);
+            semantic_errors.add(err);
+        }else{
+
+            int line;
+
+            try {
+                line = ctx.id().ID_MAJ().getSymbol().getLine();
+            }catch (Exception e){
+                line = ctx.id().ID_MIN().getSymbol().getLine();
+            }
+
+            String type = symbol_table.getType(id);
+            Compatible_check(line, current_type, type);
+        }
+
+        return null;
+    }
+
+    @Override
+    public Object visitEntier(LangParser.EntierContext ctx) {
+
+        int line = ctx.ENTIER().getSymbol().getLine();
+        Compatible_check(line, current_type, "intCompil");
+
+        return null;
+    }
+
+
+    @Override
+    public Object visitReel(LangParser.ReelContext ctx) {
+
+        int line = ctx.REEL().getSymbol().getLine();
+        Compatible_check(line, current_type, "floatCompil");
+        return super.visitReel(ctx);
+    }
+
+    @Override
+    public Object visitChaine(LangParser.ChaineContext ctx) {
+
+        int line = ctx.CHAINE().getSymbol().getLine();
+        Compatible_check(line, current_type, "stringCompil");
+        return super.visitChaine(ctx);
     }
 }

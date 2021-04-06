@@ -1,7 +1,5 @@
 package semantic.Assembly;
-
 import semantic.Quadruplet;
-
 import java.util.ArrayList;
 
 public class Assembly_Code {
@@ -103,10 +101,7 @@ public class Assembly_Code {
     }
 
 
-
     private void get_in_acc(String x, String y, int index){
-
-
 
         if (AX.isEmpty()) {
             Gen("MOVE", x, "AX");
@@ -130,9 +125,4 @@ public class Assembly_Code {
         Gen("MOVE", x, "AX");
         AX = x;
     }
-
-
-
-
-
 }
