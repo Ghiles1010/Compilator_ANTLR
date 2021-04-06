@@ -13,10 +13,15 @@ public class Quadruplet_Table {
 
 
     public void print(){
-
+        int i=0;
         for(Quadruplet q : this.quadruplets){
 
-            System.out.println(q.toString());
+            System.out.println(i+" - "+q.toString());
+            i++;
         }
+    }
+
+    public ArrayList<Quadruplet> getQuadruplets() {
+        return quadruplets;
     }
 }

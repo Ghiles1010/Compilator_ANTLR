@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Error_Table {
 
-    ArrayList<Error> errors;
+    private ArrayList<Error> errors;
 
     public Error_Table(ArrayList<Error> errors){
 
@@ -24,4 +24,7 @@ public class Error_Table {
         }
     }
 
+    public ArrayList<Error> getErrors() {
+        return errors;
+    }
 }

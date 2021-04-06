@@ -48,30 +48,33 @@ PRINT : 'printCompil';
 COMMENT_S : '//'~[\r\n]* -> skip;
 COMMENT_M : '/*'.+?'*/' -> skip;
 
+ID_MAJ : [A-Z] [A-Za-z0-9_]*;
+ID_MIN : [a-z] [A-Za-z0-9_]*;
 
-NOM_PROGRAMME : [A-Z][A-Za-z0-9_]*;
-ID : [A-Za-z][A-Za-z0-9_]*;
+
 
 
 WS : [ \r\t\n]+ -> skip ;
 
 // Global program
-root : COMPIL NOM_PROGRAMME PO PF AO declaration START body AF EOF;
+root : COMPIL ID_MAJ PO PF AO declaration START body AF EOF;
 
 // Declaration part
 declaration: type list_id  PV declaration    #declare
-             |                              #declare_empty;
+             |                               #declare_empty;
 
 type : INT | FLOAT | STRING;
 
-list_id : ID VG list_id      #list_id_next
-        | ID                 #list_id_final;
+id : ID_MAJ | ID_MIN;
+
+list_id : id VG list_id      #list_id_next
+        | id                 #list_id_final;
 
 // operands and operators
 operand : ENTIER #entier
         | REEL #reel
         | CHAINE #chaine
-        | ID #idt;
+        | id #idt;
 
 operator : PLUS | MOINS | DIV | MUL;
 
@@ -84,7 +87,7 @@ formule_next  : operator formule           #formule_operator
 
 
 // Affectation
-affectation : ID AFF formule;
+affectation : id AFF formule;
 
 // Comparator
 comparator : GRT | LSS | EQ | NEQ ;
@@ -99,8 +102,22 @@ else_ : || ELSE AO body AF;
 // Do While
 do_ : DO AO body AF WHILE PO condition PF;
 
+//read
+read_: READ PO id PF PV;
+
+
+
+//print
+content : CHAINE | id;
+print_: PRINT PO content PF PV;
+
+
 // instruction
-instruction : affectation PV | if_ | do_;
+instruction :   affectation PV
+              | read_
+              | print_
+              | if_
+              | do_;
 
 // Body
 body: instruction body ||;

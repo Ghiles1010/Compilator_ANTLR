@@ -1,3 +1,4 @@
+import org.antlr.v4.runtime.tree.TerminalNode;
 import semantic.*;
 import semantic.Errors.Error;
 import semantic.Errors.Error_Duplicate;
@@ -53,10 +54,7 @@ public class Visitors extends LangBaseVisitor {
         if(t1.equals("stringCompil") && !t2.equals("stringCompil")){
                 return false; }
 
-        if(!t2.equals("floatCompil") && !t2.equals("intCompil")){
-            return false; }
-
-        return true;
+        return t2.equals("floatCompil") || t2.equals("intCompil");
     }
 
 
@@ -75,6 +73,11 @@ public class Visitors extends LangBaseVisitor {
     }
 
 
+    @Override
+    public Object visitId(LangParser.IdContext ctx) {
+
+        return ctx.ID_MAJ() == null ? ctx.ID_MIN() : ctx.ID_MAJ();
+    }
 
     @Override
     public Object visitDeclare(LangParser.DeclareContext ctx) {
@@ -96,6 +99,7 @@ public class Visitors extends LangBaseVisitor {
                 Symbol symbol = new Symbol();
                 symbol.setId(id);
                 symbol.setType(ctx.type().getText());
+
                 symbol_table.add(symbol);
             }
 
@@ -110,8 +114,9 @@ public class Visitors extends LangBaseVisitor {
     @Override
     public Object visitList_id_next(LangParser.List_id_nextContext ctx) {
 
-        String id = ctx.ID().getText();
-        int line = ctx.ID().getSymbol().getLine();
+        TerminalNode node = (TerminalNode) visit(ctx.id());
+        String id = ctx.id().getText();
+        int line = node.getSymbol().getLine();
 
         return new Id_Info(id, line, (Id_Info) visit(ctx.list_id()));
     }
@@ -119,8 +124,9 @@ public class Visitors extends LangBaseVisitor {
     @Override
     public Object visitList_id_final(LangParser.List_id_finalContext ctx) {
 
-        String id = ctx.ID().getText();
-        int line = ctx.ID().getSymbol().getLine();
+        TerminalNode node = (TerminalNode) visit(ctx.id());
+        String id = ctx.id().getText();
+        int line = node.getSymbol().getLine();
 
         return new Id_Info(id, line, null);
     }
@@ -131,7 +137,6 @@ public class Visitors extends LangBaseVisitor {
     public Object visitFormule_operand(LangParser.Formule_operandContext ctx) {
 
         postfix.push(ctx.operand().getText());
-
         return visitChildren(ctx);
     }
 
@@ -182,7 +187,7 @@ public class Visitors extends LangBaseVisitor {
         String op2 = postfix.pop();
         String op1 = postfix.pop();
 
-        Quadruplet quad = new Quadruplet(op1, op2, operator, temporary);
+        Quadruplet quad = new Quadruplet(operator, op1, op2, temporary);
         quadruplets.add(quad);
 
         postfix.push(temporary);
@@ -192,13 +197,12 @@ public class Visitors extends LangBaseVisitor {
     @Override
     public Object visitAffectation(LangParser.AffectationContext ctx) {
 
-        String id = ctx.ID().getText();
-
-
+        String id = ctx.id().getText();
 
         if(! symbol_table.symbol_exists(id)){
 
-            Error err = new Error_Undeclared(ctx.ID().getSymbol().getLine(), id);
+            TerminalNode node = (TerminalNode) visit(ctx.id());
+            Error err = new Error_Undeclared(node.getSymbol().getLine(), id);
             semantic_errors.add(err);
         }else {
 
@@ -219,11 +223,12 @@ public class Visitors extends LangBaseVisitor {
     @Override
     public Object visitIdt(LangParser.IdtContext ctx) {
 
-        String id = ctx.ID().getText();
+        String id = ctx.id().getText();
 
         if(! symbol_table.symbol_exists(id)){
 
-            Error err = new Error_Undeclared(ctx.ID().getSymbol().getLine(), id);
+            TerminalNode node = (TerminalNode) visit(ctx.id());
+            Error err = new Error_Undeclared(node.getSymbol().getLine(), id);
             semantic_errors.add(err);
         }
 
@@ -232,5 +237,108 @@ public class Visitors extends LangBaseVisitor {
     }
 
 
+    @Override
+    public Object visitIf_(LangParser.If_Context ctx) {
 
+        Quadruplet quad= (Quadruplet) visit(ctx.condition());
+        //convertir le comparateur en branchement
+        quad.setQ1(conversionCompBranch(quad.getQ1(), 0));
+        quadruplets.add(quad);
+        visit(ctx.body());
+        String q2= (String) visit(ctx.else_());
+        quad.setQ2(q2);
+
+        return null;
+    }
+
+    private String conversionCompBranch(String comparator, int i){
+        if(i ==0 ){ // pour if branchement si condition fausse
+            switch (comparator){
+                case "==": return "BNE";
+                case "!=": return "BE";
+                case "<": return "BGE";
+                case ">": return "BLE";
+                default: return null;
+            }
+        }
+        else{ // pour la boucle Do..While, branchement si condition vraie
+            switch (comparator){
+                case "==": return "BE";
+                case "!=": return "BNE";
+                case "<": return "BL";
+                case ">": return "BG";
+                default: return null;
+            }
+
+        }
+    }
+    @Override
+    public Object visitCondition(LangParser.ConditionContext ctx) {
+
+        visit(ctx.formule(0));
+        String temp1 = postfix.empty() ? "T" + t_counter : postfix.pop();
+
+        visit(ctx.formule(1));
+        String temp2 = postfix.empty() ? "T" + t_counter : postfix.pop();
+
+        String comp = ctx.comparator().getText();
+        return new Quadruplet(comp, null, temp1, temp2);
+
+    }
+
+
+    @Override
+    public Object visitElse_(LangParser.Else_Context ctx) {
+        if(ctx.getText().isEmpty())
+          { return String.valueOf(quadruplets.size());
+          }
+        else{
+             Quadruplet quad= new Quadruplet("BR", null, null, null);
+             quadruplets.add(quad);
+             int posBr= quadruplets.size();
+             super.visitChildren(ctx);
+             quad.setQ2(String.valueOf(quadruplets.size()));
+             return String.valueOf(posBr) ;
+        }
+
+    }
+
+    @Override
+    public Object visitDo_(LangParser.Do_Context ctx) {
+      /*if(ctx.body().getText() != "") {*/
+          //garder la position de la premiere inst de la boucle
+          int posDo = quadruplets.size();
+
+          visit(ctx.body());
+
+          Quadruplet quad = (Quadruplet) visit(ctx.condition());
+          quad.setQ2(String.valueOf(posDo));
+          quad.setQ1(conversionCompBranch(quad.getQ1(), 1));
+
+        quadruplets.add(quad);
+
+      return null;
+    }
+
+    @Override
+    public Object visitRead_(LangParser.Read_Context ctx) {
+
+
+        String id = ctx.id().getText();
+        Quadruplet quad= new Quadruplet("READ", id, null, null);
+        quadruplets.add(quad);
+
+        return null;
+    }
+
+    @Override
+    public Object visitPrint_(LangParser.Print_Context ctx) {
+
+
+        String id = ctx.content().getText();
+        Quadruplet quad= new Quadruplet("PRINT", id, null, null);
+        quadruplets.add(quad);
+
+        return null;
+    }
 }

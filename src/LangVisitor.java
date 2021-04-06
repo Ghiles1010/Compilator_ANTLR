@@ -36,6 +36,12 @@ public interface LangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitType(LangParser.TypeContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LangParser#id}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitId(LangParser.IdContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code list_id_next}
 	 * labeled alternative in {@link LangParser#list_id}.
 	 * @param ctx the parse tree
@@ -147,6 +153,24 @@ public interface LangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitDo_(LangParser.Do_Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link LangParser#read_}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRead_(LangParser.Read_Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link LangParser#content}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitContent(LangParser.ContentContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LangParser#print_}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrint_(LangParser.Print_Context ctx);
 	/**
 	 * Visit a parse tree produced by {@link LangParser#instruction}.
 	 * @param ctx the parse tree

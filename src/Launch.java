@@ -20,8 +20,11 @@ public class Launch {
 
         program.getError_table().print();
         program.getQuad_table().print();
-        
+
+        if(program.getCode() != null)
+            program.getCode().print();
+        else
+            System.out.println("Program has not compiled due to errors.");
+
     }
-
-
 }

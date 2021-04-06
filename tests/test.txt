@@ -6,21 +6,19 @@ compil Algorithme()
        line
        comment
     */
-    intCompil car, i, z;
-    floatCompil lp, i, j;
-    stringCompil str, j,z,x;
+    intCompil car, Iyu, z, I;
+    floatCompil lp ;
+    stringCompil str, j, x, i;
 
     start
 
-        gh = (((2) + (-3)) + ((5) / -10))+e;
 
-        x = "hi";
+        i = 2 * 8 + ( -3 * 5 + 7 ) ;
+        car = i;
+        z = lp;
 
-
-        do{
-
-            x = 3;
-        }while(a>b)
-
+        scanCompil(x);
+        printCompil(x);
+        printCompil("Hi");
 
 }
