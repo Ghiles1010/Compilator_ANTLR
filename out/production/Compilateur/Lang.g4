@@ -59,7 +59,7 @@ WS : [ \r\t\n]+ -> skip ;
 root : COMPIL NOM_PROGRAMME PO PF AO declaration START body AF EOF;
 
 // Declaration part
-declaration: type list_id PV declaration    #declare
+declaration: type list_id  PV declaration    #declare
              |                              #declare_empty;
 
 type : INT | FLOAT | STRING;
@@ -98,18 +98,21 @@ else_ : || ELSE AO body AF;
 
 // Do While
 do_ : DO AO body AF WHILE PO condition PF;
+
 //read
-read_: READ PO list_id PF PV;
+read_: READ PO ID PF PV;
+
 //print
-print_: PRINT PO operand PF PV;
+print_: PRINT PO formule PF PV;
 
 
 // instruction
-instruction : affectation PV
-              |read_
-              |print_
+instruction :   affectation PV
+              | read_
+              | print_
               | if_
               | do_;
 
 // Body
 body: instruction body ||;
+

@@ -269,6 +269,7 @@ public class Visitors extends LangBaseVisitor {
     public Object visitCondition(LangParser.ConditionContext ctx) {
 
         visit(ctx.formule(0));
+        System.out.println();postfix.firstElement();
         String temp1 = postfix.empty() ? "T" + t_counter : postfix.pop();
 
         visit(ctx.formule(1));

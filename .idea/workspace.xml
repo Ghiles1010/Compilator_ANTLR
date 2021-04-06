@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="381605dc-1e1f-4173-98e1-a7f5e1eb7e9b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Compilateur.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Compilateur.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Compilateur/Lang.g4" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/Lang.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/META-INF/Compilateur.kotlin_module" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Compilateur/Visitors.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/Visitors.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/semantic/Quadruplet_Table.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/semantic/Quadruplet_Table.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Lang.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Lang.g4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Visitors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Visitors.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/semantic/Quadruplet_Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Quadruplet_Table.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +26,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/production" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tests/test.txt" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
