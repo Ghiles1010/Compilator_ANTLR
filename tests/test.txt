@@ -16,8 +16,10 @@ compil Algorithme()
     start
 
 
-        a = 2;
-        i= "hi";
+        z = I;
+        i= Iyu;
+
+
 
         i = 2 + 2 * 3 / (5 - 9);
 

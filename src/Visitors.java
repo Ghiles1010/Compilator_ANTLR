@@ -359,6 +359,7 @@ public class Visitors extends LangBaseVisitor {
             try {
                 line = ctx.id().ID_MAJ().getSymbol().getLine();
             }catch (Exception e){
+                
                 line = ctx.id().ID_MIN().getSymbol().getLine();
             }
 
