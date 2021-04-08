@@ -16,9 +16,10 @@ public class Quadruplet {
     }
 
 
-    public String getQ1() {
-        return q1;
-    }
+
+
+
+    public String getQ1() { return q1; }
 
     public void setQ1(String q1) {
         this.q1 = q1;

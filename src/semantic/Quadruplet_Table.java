@@ -16,8 +16,12 @@ public class Quadruplet_Table {
         int i=0;
         for(Quadruplet q : this.quadruplets){
 
-            System.out.println(i+"_"+q.toString());
+            System.out.println(i+" - "+q.toString());
             i++;
         }
+    }
+
+    public ArrayList<Quadruplet> getQuadruplets() {
+        return quadruplets;
     }
 }

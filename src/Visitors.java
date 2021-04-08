@@ -1,8 +1,8 @@
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import semantic.*;
+import semantic.Errors.*;
 import semantic.Errors.Error;
-import semantic.Errors.Error_Duplicate;
-import semantic.Errors.Error_Table;
-import semantic.Errors.Error_Undeclared;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +29,7 @@ public class Visitors extends LangBaseVisitor {
     public Visitors() {
 
         t_counter = 0;
+        current_type = "";
 
         this.symbol_table= new Symbol_Table();
         this.semantic_errors = new ArrayList<>();
@@ -37,7 +38,6 @@ public class Visitors extends LangBaseVisitor {
         this.postfix = new Stack<>();
 
         this.quadruplets = new ArrayList<>();
-
 
         this.priority = new HashMap<>() {{
             put("+", 0); put("-", 0); put("*", 1); put("/", 1);
@@ -51,15 +51,23 @@ public class Visitors extends LangBaseVisitor {
 
     private boolean Compatible_type(String t1, String t2){
 
+        if(t1.equals(t2))
+            return true;
+
         if(t1.equals("stringCompil") && !t2.equals("stringCompil")){
                 return false; }
 
-        if(!t2.equals("floatCompil") && !t2.equals("intCompil")){
-            return false; }
-
-        return true;
+        return t2.equals("floatCompil") || t2.equals("intCompil");
     }
 
+    private void Compatible_check(int line, String type1 ,String type2){
+
+        if(! Compatible_type(type1, type2)) {
+
+            Error err = new Error_Type(line, type1, type2);
+            semantic_errors.add(err);
+        }
+    }
 
 
 
@@ -76,11 +84,17 @@ public class Visitors extends LangBaseVisitor {
     }
 
 
+    @Override
+    public Object visitId(LangParser.IdContext ctx) {
+
+        return ctx.ID_MAJ() == null ? ctx.ID_MIN() : ctx.ID_MAJ();
+    }
 
     @Override
     public Object visitDeclare(LangParser.DeclareContext ctx) {
 
         Id_Info list_id = (Id_Info) visit(ctx.list_id());
+
 
         while (list_id != null){
 
@@ -111,8 +125,9 @@ public class Visitors extends LangBaseVisitor {
     @Override
     public Object visitList_id_next(LangParser.List_id_nextContext ctx) {
 
-        String id = ctx.ID().getText();
-        int line = ctx.ID().getSymbol().getLine();
+        TerminalNode node = (TerminalNode) visit(ctx.id());
+        String id = ctx.id().getText();
+        int line = node.getSymbol().getLine();
 
         return new Id_Info(id, line, (Id_Info) visit(ctx.list_id()));
     }
@@ -120,18 +135,22 @@ public class Visitors extends LangBaseVisitor {
     @Override
     public Object visitList_id_final(LangParser.List_id_finalContext ctx) {
 
-        String id = ctx.ID().getText();
-        int line = ctx.ID().getSymbol().getLine();
+        TerminalNode node = (TerminalNode) visit(ctx.id());
+        String id = ctx.id().getText();
+        int line = node.getSymbol().getLine();
 
         return new Id_Info(id, line, null);
     }
 
 
 
+
     @Override
     public Object visitFormule_operand(LangParser.Formule_operandContext ctx) {
 
-        postfix.push(ctx.operand().getText());
+        String id = ctx.operand().getText();
+
+        postfix.push(id);
         return visitChildren(ctx);
     }
 
@@ -182,7 +201,7 @@ public class Visitors extends LangBaseVisitor {
         String op2 = postfix.pop();
         String op1 = postfix.pop();
 
-        Quadruplet quad = new Quadruplet(op1, op2, operator, temporary);
+        Quadruplet quad = new Quadruplet(operator, op1, op2, temporary);
         quadruplets.add(quad);
 
         postfix.push(temporary);
@@ -192,11 +211,12 @@ public class Visitors extends LangBaseVisitor {
     @Override
     public Object visitAffectation(LangParser.AffectationContext ctx) {
 
-        String id = ctx.ID().getText();
+        String id = ctx.id().getText();
 
         if(! symbol_table.symbol_exists(id)){
 
-            Error err = new Error_Undeclared(ctx.ID().getSymbol().getLine(), id);
+            TerminalNode node = (TerminalNode) visit(ctx.id());
+            Error err = new Error_Undeclared(node.getSymbol().getLine(), id);
             semantic_errors.add(err);
         }else {
 
@@ -214,20 +234,8 @@ public class Visitors extends LangBaseVisitor {
         return null;
     }
 
-    @Override
-    public Object visitIdt(LangParser.IdtContext ctx) {
-
-        String id = ctx.ID().getText();
-
-        if(! symbol_table.symbol_exists(id)){
-
-            Error err = new Error_Undeclared(ctx.ID().getSymbol().getLine(), id);
-            semantic_errors.add(err);
-        }
 
 
-        return null;
-    }
 
     @Override
     public Object visitIf_(LangParser.If_Context ctx) {
@@ -236,7 +244,6 @@ public class Visitors extends LangBaseVisitor {
         //convertir le comparateur en branchement
         quad.setQ1(conversionCompBranch(quad.getQ1(), 0));
         quadruplets.add(quad);
-        int position= quadruplets.size();
         visit(ctx.body());
         String q2= (String) visit(ctx.else_());
         quad.setQ2(q2);
@@ -244,7 +251,7 @@ public class Visitors extends LangBaseVisitor {
         return null;
     }
 
-    public String conversionCompBranch(String comparator, int i){
+    private String conversionCompBranch(String comparator, int i){
         if(i ==0 ){ // pour if branchement si condition fausse
             switch (comparator){
                 case "==": return "BNE";
@@ -267,9 +274,11 @@ public class Visitors extends LangBaseVisitor {
     }
     @Override
     public Object visitCondition(LangParser.ConditionContext ctx) {
-
+        //bricolage
+        current_type= "intCompil";
         visit(ctx.formule(0));
-        System.out.println();postfix.firstElement();
+        System.out.println();
+        postfix.firstElement();
         String temp1 = postfix.empty() ? "T" + t_counter : postfix.pop();
 
         visit(ctx.formule(1));
@@ -283,11 +292,11 @@ public class Visitors extends LangBaseVisitor {
 
     @Override
     public Object visitElse_(LangParser.Else_Context ctx) {
-        if(ctx.getText()== "")
+        if(ctx.getText().isEmpty())
           { return String.valueOf(quadruplets.size());
           }
         else{
-             Quadruplet quad= new Quadruplet("BR",null,null,null);
+             Quadruplet quad= new Quadruplet("BR", null, null, null);
              quadruplets.add(quad);
              int posBr= quadruplets.size();
              super.visitChildren(ctx);
@@ -299,7 +308,7 @@ public class Visitors extends LangBaseVisitor {
 
     @Override
     public Object visitDo_(LangParser.Do_Context ctx) {
-      /*if(ctx.body().getText() != "") {*/
+
           //garder la position de la premiere inst de la boucle
           int posDo = quadruplets.size();
 
@@ -314,7 +323,78 @@ public class Visitors extends LangBaseVisitor {
       return null;
     }
 
+    @Override
+    public Object visitRead_(LangParser.Read_Context ctx) {
 
 
+        String id = ctx.id().getText();
+        Quadruplet quad= new Quadruplet("READ", id, null, null);
+        quadruplets.add(quad);
 
+        return null;
+    }
+
+    @Override
+    public Object visitPrint_(LangParser.Print_Context ctx) {
+
+
+        String id = ctx.content().getText();
+        Quadruplet quad= new Quadruplet("PRINT", id, null, null);
+        quadruplets.add(quad);
+
+        return null;
+    }
+
+    @Override
+    public Object visitIdt(LangParser.IdtContext ctx) {
+
+        String id = ctx.id().getText();
+
+        if(! symbol_table.symbol_exists(id)){
+
+            TerminalNode node = (TerminalNode) visit(ctx.id());
+            Error err = new Error_Undeclared(node.getSymbol().getLine(), id);
+            semantic_errors.add(err);
+        }else{
+
+            int line;
+
+            try {
+                line = ctx.id().ID_MAJ().getSymbol().getLine();
+            }catch (Exception e){
+                line = ctx.id().ID_MIN().getSymbol().getLine();
+            }
+
+            String type = symbol_table.getType(id);
+            Compatible_check(line, current_type, type);
+        }
+
+        return null;
+    }
+
+    @Override
+    public Object visitEntier(LangParser.EntierContext ctx) {
+
+        int line = ctx.ENTIER().getSymbol().getLine();
+        Compatible_check(line, current_type, "intCompil");
+
+        return null;
+    }
+
+
+    @Override
+    public Object visitReel(LangParser.ReelContext ctx) {
+
+        int line = ctx.REEL().getSymbol().getLine();
+        Compatible_check(line, current_type, "floatCompil");
+        return super.visitReel(ctx);
+    }
+
+    @Override
+    public Object visitChaine(LangParser.ChaineContext ctx) {
+
+        int line = ctx.CHAINE().getSymbol().getLine();
+        Compatible_check(line, current_type, "stringCompil");
+        return super.visitChaine(ctx);
+    }
 }

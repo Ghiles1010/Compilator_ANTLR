@@ -8,11 +8,15 @@ public abstract class Error {
 
 
 
-    public Error(int line, String token){
+    public Error(int line){
 
         this.line = line;
-        this.token = token;
     }
 
 
+    @Override
+    public String toString() {
+        String line_message = String.format("Error at line %d, ", this.line);
+        return line_message;
+    }
 }

@@ -5,18 +5,15 @@ public class Error_Undeclared extends Error {
 
     public Error_Undeclared(int line, String token){
 
-        super(line, token);
+        super(line);
+        this.token = token;
     }
 
     @Override
     public String toString() {
 
-
-        String line_message = String.format("Error at line %d. ", this.line);
         String message = "";
-
         message = String.format("'%s' has not been declared.", this.token);
-
-        return line_message + message;
+        return super.toString() + message;
     }
 }
