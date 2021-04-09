@@ -4,31 +4,37 @@ public class Symbol {
     private String id;
     private String type;
     private String value;
+    private boolean declared;
 
 
+    public Symbol(String id, String type, String value) {
+        this.id = id;
+        this.type = type;
+        this.value = value;
+        this.declared = true;
+    }
+
+    public Symbol(String id, String type, String value, boolean declared) {
+        this.id = id;
+        this.type = type;
+        this.value = value;
+        this.declared = declared;
+    }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getValue() {
         return value;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public boolean isDeclared() {
+        return declared;
     }
 }
 

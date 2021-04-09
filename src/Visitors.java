@@ -1,4 +1,3 @@
-import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import semantic.*;
 import semantic.Errors.*;
@@ -12,11 +11,10 @@ import java.util.Stack;
 
 public class Visitors extends LangBaseVisitor {
 
-
     private Symbol_Table symbol_table;
-    private ArrayList<Error> semantic_errors;
     private Map<String, Integer> priority;
-    private ArrayList<Quadruplet> quadruplets;
+    private Quadruplet_Table quadruplet_table;
+    private Error_Table error_table;
     private Stack<String> postfix;
 
     //this is used to check types
@@ -29,15 +27,14 @@ public class Visitors extends LangBaseVisitor {
     public Visitors() {
 
         t_counter = 0;
-        current_type = "p";
-
-        this.symbol_table= new Symbol_Table();
-        this.semantic_errors = new ArrayList<>();
+        current_type = "";
 
         this.operators = new Stack<>();
         this.postfix = new Stack<>();
 
-        this.quadruplets = new ArrayList<>();
+        this.symbol_table= new Symbol_Table();
+        this.quadruplet_table = new Quadruplet_Table();
+        this.error_table = new Error_Table();
 
         this.priority = new HashMap<>() {{
             put("+", 0); put("-", 0); put("*", 1); put("/", 1);
@@ -54,8 +51,8 @@ public class Visitors extends LangBaseVisitor {
         if(t1.equals(t2))
             return true;
 
-        if(t1.equals("stringCompil") && !t2.equals("stringCompil")){
-                return false; }
+        if(t1.equals("stringCompil"))
+                return false;
 
         return t2.equals("floatCompil") || t2.equals("intCompil");
     }
@@ -65,7 +62,7 @@ public class Visitors extends LangBaseVisitor {
         if(! Compatible_type(type1, type2)) {
 
             Error err = new Error_Type(line, type1, type2);
-            semantic_errors.add(err);
+            error_table.add(err);
         }
     }
 
@@ -76,11 +73,7 @@ public class Visitors extends LangBaseVisitor {
     public Object visitRoot(LangParser.RootContext ctx) {
 
         visitChildren(ctx);
-
-        Quadruplet_Table quadruplet_table = new Quadruplet_Table(quadruplets);
-        Error_Table error_table = new Error_Table(semantic_errors);
-
-        return new Program(quadruplet_table, error_table);
+        return new Program(symbol_table, quadruplet_table, error_table);
     }
 
 
@@ -93,24 +86,22 @@ public class Visitors extends LangBaseVisitor {
     @Override
     public Object visitDeclare(LangParser.DeclareContext ctx) {
 
+        current_type = ctx.type().getText();
         Id_Info list_id = (Id_Info) visit(ctx.list_id());
-
 
         while (list_id != null){
 
             String id = list_id.getId();
+            String value = list_id.getValue();
 
             if(symbol_table.symbol_exists(id)){
 
                 Error err = new Error_Duplicate(list_id.getLine(), id);
-                semantic_errors.add(err);
+                error_table.add(err);
 
             }else{
 
-                Symbol symbol = new Symbol();
-                symbol.setId(id);
-                symbol.setType(ctx.type().getText());
-
+                Symbol symbol = new Symbol(id, ctx.type().getText(), value);
                 symbol_table.add(symbol);
             }
 
@@ -123,23 +114,43 @@ public class Visitors extends LangBaseVisitor {
 
 
     @Override
-    public Object visitList_id_next(LangParser.List_id_nextContext ctx) {
+    public Object visitDeclare_empty(LangParser.Declare_emptyContext ctx) {
+        current_type = "";
+        return null;
+    }
+
+    @Override
+    public Object visitList_id(LangParser.List_idContext ctx) {
 
         TerminalNode node = (TerminalNode) visit(ctx.id());
         String id = ctx.id().getText();
         int line = node.getSymbol().getLine();
+        String value = (String) visit(ctx.initialisation());
 
-        return new Id_Info(id, line, (Id_Info) visit(ctx.list_id()));
+        return new Id_Info(id, value, line, (Id_Info) visit(ctx.list_id_next()));
+    }
+
+    @Override
+    public Object visitInit(LangParser.InitContext ctx) {
+
+        visit(ctx.constant());
+        return ctx.constant().getText();
+    }
+
+    @Override
+    public Object visitNot_init(LangParser.Not_initContext ctx) {
+        return null;
+    }
+
+    @Override
+    public Object visitList_id_nxt(LangParser.List_id_nxtContext ctx) {
+
+        return visit(ctx.list_id());
     }
 
     @Override
     public Object visitList_id_final(LangParser.List_id_finalContext ctx) {
-
-        TerminalNode node = (TerminalNode) visit(ctx.id());
-        String id = ctx.id().getText();
-        int line = node.getSymbol().getLine();
-
-        return new Id_Info(id, line, null);
+        return null;
     }
 
 
@@ -191,6 +202,7 @@ public class Visitors extends LangBaseVisitor {
             Generate_arithmetic_Quad(operators.pop());
         }
 
+        current_type = "";
         return super.visitFormule_empty(ctx);
     }
 
@@ -202,7 +214,7 @@ public class Visitors extends LangBaseVisitor {
         String op1 = postfix.pop();
 
         Quadruplet quad = new Quadruplet(operator, op1, op2, temporary);
-        quadruplets.add(quad);
+        quadruplet_table.add(quad);
 
         postfix.push(temporary);
     }
@@ -217,7 +229,10 @@ public class Visitors extends LangBaseVisitor {
 
             TerminalNode node = (TerminalNode) visit(ctx.id());
             Error err = new Error_Undeclared(node.getSymbol().getLine(), id);
-            semantic_errors.add(err);
+            error_table.add(err);
+
+            Symbol symbol = new Symbol(id, null, null, false);
+            symbol_table.add(symbol);
         }else {
 
             current_type = symbol_table.getType(id);
@@ -228,7 +243,7 @@ public class Visitors extends LangBaseVisitor {
         String temp = postfix.empty() ? "T" + t_counter : postfix.pop();
 
         Quadruplet quad = new Quadruplet("=", temp, null, id);
-        quadruplets.add(quad);
+        quadruplet_table.add(quad);
 
 
         return null;
@@ -241,9 +256,10 @@ public class Visitors extends LangBaseVisitor {
     public Object visitIf_(LangParser.If_Context ctx) {
 
         Quadruplet quad= (Quadruplet) visit(ctx.condition());
+
         //convertir le comparateur en branchement
         quad.setQ1(conversionCompBranch(quad.getQ1(), 0));
-        quadruplets.add(quad);
+        quadruplet_table.add(quad);
         visit(ctx.body());
         String q2= (String) visit(ctx.else_());
         quad.setQ2(q2);
@@ -274,8 +290,11 @@ public class Visitors extends LangBaseVisitor {
     }
     @Override
     public Object visitCondition(LangParser.ConditionContext ctx) {
-
+        //bricolage
+        current_type= "intCompil";
         visit(ctx.formule(0));
+        System.out.println();
+        postfix.firstElement();
         String temp1 = postfix.empty() ? "T" + t_counter : postfix.pop();
 
         visit(ctx.formule(1));
@@ -290,14 +309,14 @@ public class Visitors extends LangBaseVisitor {
     @Override
     public Object visitElse_(LangParser.Else_Context ctx) {
         if(ctx.getText().isEmpty())
-          { return String.valueOf(quadruplets.size());
+          { return String.valueOf(quadruplet_table.getSize());
           }
         else{
              Quadruplet quad= new Quadruplet("BR", null, null, null);
-             quadruplets.add(quad);
-             int posBr= quadruplets.size();
+             quadruplet_table.add(quad);
+             int posBr= quadruplet_table.getSize();
              super.visitChildren(ctx);
-             quad.setQ2(String.valueOf(quadruplets.size()));
+             quad.setQ2(String.valueOf(quadruplet_table.getSize()));
              return String.valueOf(posBr) ;
         }
 
@@ -305,9 +324,9 @@ public class Visitors extends LangBaseVisitor {
 
     @Override
     public Object visitDo_(LangParser.Do_Context ctx) {
-      /*if(ctx.body().getText() != "") {*/
+
           //garder la position de la premiere inst de la boucle
-          int posDo = quadruplets.size();
+          int posDo = quadruplet_table.getSize();
 
           visit(ctx.body());
 
@@ -315,7 +334,7 @@ public class Visitors extends LangBaseVisitor {
           quad.setQ2(String.valueOf(posDo));
           quad.setQ1(conversionCompBranch(quad.getQ1(), 1));
 
-        quadruplets.add(quad);
+        quadruplet_table.getSize();
 
       return null;
     }
@@ -325,8 +344,7 @@ public class Visitors extends LangBaseVisitor {
 
 
         String id = ctx.id().getText();
-        Quadruplet quad= new Quadruplet("READ", id, null, null);
-        quadruplets.add(quad);
+        quadruplet_table.add(new Quadruplet("READ", id, null, null));
 
         return null;
     }
@@ -334,11 +352,8 @@ public class Visitors extends LangBaseVisitor {
     @Override
     public Object visitPrint_(LangParser.Print_Context ctx) {
 
-
         String id = ctx.content().getText();
-        Quadruplet quad= new Quadruplet("PRINT", id, null, null);
-        quadruplets.add(quad);
-
+        quadruplet_table.add(new Quadruplet("PRINT", id, null, null));
         return null;
     }
 
@@ -351,7 +366,7 @@ public class Visitors extends LangBaseVisitor {
 
             TerminalNode node = (TerminalNode) visit(ctx.id());
             Error err = new Error_Undeclared(node.getSymbol().getLine(), id);
-            semantic_errors.add(err);
+            error_table.add(err);
         }else{
 
             int line;

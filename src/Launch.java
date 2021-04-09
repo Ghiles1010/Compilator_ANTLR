@@ -15,16 +15,19 @@ public class Launch {
         LangParser parser = new LangParser(token);
         ParseTree tree = parser.root();
 
-        Visitors visitors = new Visitors();
-        Program program = (Program) visitors.visit(tree);
 
-        program.getError_table().print();
-        program.getQuad_table().print();
+        if (parser.getNumberOfSyntaxErrors() == 0){
 
-        if(program.getCode() != null)
+            Visitors visitors = new Visitors();
+
+            Program program = (Program) visitors.visit(tree);
+
+            program.getError_table().print();
+            program.getSymbol_table().print();
+            program.getQuad_table().print();
             program.getCode().print();
-        else
-            System.out.println("Program has not compiled due to errors.");
+
+        }
 
     }
 }

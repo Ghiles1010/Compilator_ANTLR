@@ -6,21 +6,23 @@ public class Assembly_Code {
 
     ArrayList<Quadruplet> quads;
     ArrayList<ASM> code;
+    boolean errors;
 
     String AX = "";
 
-    public Assembly_Code(ArrayList<Quadruplet> quads){
+    public Assembly_Code(ArrayList<Quadruplet> quads, boolean errors){
 
-        code = new ArrayList<>();
-        this.quads = quads;
+        this.errors = errors;
 
-        Generate_assembly();
+        if(!errors) {
+
+            code = new ArrayList<>();
+            this.quads = quads;
+
+            Generate_assembly();
+        }
     }
-
-
-
-
-
+    
     private void Generate_assembly(){
 
         Quadruplet quad;
@@ -69,7 +71,18 @@ public class Assembly_Code {
                 case "PRINT" :
                     Gen("OUTPUT", quad.getQ2());
                     break;
+                case "BR" : //branchement incotionnel
+                    Gen("JMP", quad.getQ2() );
+                    break;
+                default:
+                    if(quad.getQ1().startsWith("B")) //les branchements conditionnels
+                    {
+                       Gen("MOV", "AX", quad.getQ3());
+                       Gen("CMP", "AX", quad.getQ4());
+                       Gen("J".concat(quad.getQ1().substring(1)), quad.getQ2());
 
+
+                    }
 
             }
 
@@ -80,21 +93,30 @@ public class Assembly_Code {
 
     public void print(){
 
-        for (ASM asm : code) {
+        if(! errors) {
 
-            System.out.println(asm.toString());
+            System.out.println("\nCode assembleur : \n");
+            for (ASM asm : code) {
+
+                System.out.println(asm.toString());
+            }
+        }
+
+        else {
+
+            System.err.println("Program has not compiled due to errors.");
         }
     }
 
 
-    void Gen(String instruction, String operator){
+    private void Gen(String instruction, String operator){
 
         ASM asm = new ASM(instruction.toUpperCase(), operator);
         this.code.add(asm);
     }
 
 
-    void Gen(String instruction, String op1, String op2){
+    private void Gen(String instruction, String op1, String op2){
 
         ASM asm = new ASM(instruction.toUpperCase(), op1, op2);
         this.code.add(asm);

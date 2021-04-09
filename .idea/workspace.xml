@@ -2,16 +2,84 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="381605dc-1e1f-4173-98e1-a7f5e1eb7e9b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Compilateur.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Compilateur.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$ContentContext.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$IdContext.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Print_Context.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Read_Context.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Compilateur/META-INF/Compilateur.kotlin_module" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Compilateur/semantic/Assembly/ASM.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Compilateur/semantic/Assembly/Assembly_Code.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/semantic/Assembly/ASM.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/semantic/Assembly/Assembly_Code.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Compilateur/Lang.g4" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/Lang.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/META-INF/Compilateur.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/Lang.interp" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/Lang.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/Lang.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/Lang.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangBaseVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangBaseVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangLexer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangLexer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangLexer.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$AffectationContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$AffectationContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$BodyContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$BodyContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$ChaineContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$ChaineContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$ComparatorContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$ComparatorContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$ConditionContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$ConditionContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$DeclarationContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$DeclarationContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$DeclareContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$DeclareContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Declare_emptyContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Declare_emptyContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Do_Context.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Do_Context.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Else_Context.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Else_Context.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$EntierContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$EntierContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$FormuleContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$FormuleContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Formule_emptyContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Formule_emptyContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Formule_nextContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Formule_nextContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Formule_operandContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Formule_operandContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Formule_operatorContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Formule_operatorContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Formule_parenthesisContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$Formule_parenthesisContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$IdtContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$IdtContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$If_Context.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$If_Context.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$InstructionContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$InstructionContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$List_idContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$List_idContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$List_id_finalContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$List_id_finalContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$List_id_nextContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$List_id_nextContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$OperandContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$OperandContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$OperatorContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$OperatorContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$ReelContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$ReelContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$RootContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$RootContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser$TypeContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser$TypeContext.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/LangVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/LangVisitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/Launch.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/Launch.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Compilateur/Visitors.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/Visitors.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/semantic/Errors/Error.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/semantic/Errors/Error.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/semantic/Errors/Error_Duplicate.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/semantic/Errors/Error_Duplicate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/semantic/Errors/Error_Table.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/semantic/Errors/Error_Table.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/semantic/Errors/Error_Type.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/semantic/Errors/Error_Type.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/semantic/Errors/Error_Undeclared.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/semantic/Errors/Error_Undeclared.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/semantic/Program.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/semantic/Program.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/semantic/Quadruplet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/semantic/Quadruplet.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Compilateur/semantic/Quadruplet_Table.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/semantic/Quadruplet_Table.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Compilateur/semantic/Symbol_Table.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Compilateur/semantic/Symbol_Table.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Lang.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Lang.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Lang.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Lang.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Lang.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/Lang.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LangBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LangBaseVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LangLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/LangLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LangLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LangLexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LangLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/LangLexer.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LangParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LangParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LangVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LangVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Launch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Launch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Visitors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Visitors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/Errors/Error.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Errors/Error.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/Errors/Error_Duplicate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Errors/Error_Duplicate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/Errors/Error_Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Errors/Error_Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/Errors/Error_Type.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Errors/Error_Type.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/Errors/Error_Undeclared.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Errors/Error_Undeclared.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/Quadruplet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Quadruplet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/semantic/Quadruplet_Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Quadruplet_Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/semantic/Symbol_Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/semantic/Symbol_Table.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +99,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/production" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Lang.g4" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />

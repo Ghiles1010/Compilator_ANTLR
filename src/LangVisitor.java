@@ -42,40 +42,67 @@ public interface LangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitId(LangParser.IdContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code list_id_next}
-	 * labeled alternative in {@link LangParser#list_id}.
+	 * Visit a parse tree produced by {@link LangParser#list_id}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitList_id_next(LangParser.List_id_nextContext ctx);
+	T visitList_id(LangParser.List_idContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code init}
+	 * labeled alternative in {@link LangParser#initialisation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInit(LangParser.InitContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code not_init}
+	 * labeled alternative in {@link LangParser#initialisation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNot_init(LangParser.Not_initContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code list_id_nxt}
+	 * labeled alternative in {@link LangParser#list_id_next}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitList_id_nxt(LangParser.List_id_nxtContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code list_id_final}
-	 * labeled alternative in {@link LangParser#list_id}.
+	 * labeled alternative in {@link LangParser#list_id_next}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitList_id_final(LangParser.List_id_finalContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code entier}
-	 * labeled alternative in {@link LangParser#operand}.
+	 * labeled alternative in {@link LangParser#constant}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitEntier(LangParser.EntierContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code reel}
-	 * labeled alternative in {@link LangParser#operand}.
+	 * labeled alternative in {@link LangParser#constant}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitReel(LangParser.ReelContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code chaine}
-	 * labeled alternative in {@link LangParser#operand}.
+	 * labeled alternative in {@link LangParser#constant}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitChaine(LangParser.ChaineContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code constantT}
+	 * labeled alternative in {@link LangParser#operand}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConstantT(LangParser.ConstantTContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code idt}
 	 * labeled alternative in {@link LangParser#operand}.

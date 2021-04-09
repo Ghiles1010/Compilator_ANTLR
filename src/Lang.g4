@@ -51,9 +51,6 @@ COMMENT_M : '/*'.+?'*/' -> skip;
 ID_MAJ : [A-Z] [A-Za-z0-9_]*;
 ID_MIN : [a-z] [A-Za-z0-9_]*;
 
-
-
-
 WS : [ \r\t\n]+ -> skip ;
 
 // Global program
@@ -63,18 +60,29 @@ root : COMPIL ID_MAJ PO PF AO declaration START body AF EOF;
 declaration: type list_id  PV declaration    #declare
              |                               #declare_empty;
 
-type : INT | FLOAT | STRING;
 
+type : INT | FLOAT | STRING;
 id : ID_MAJ | ID_MIN;
 
-list_id : id VG list_id      #list_id_next
-        | id                 #list_id_final;
+
+list_id : id initialisation list_id_next;
+
+initialisation : AFF constant     #init
+               |                  #not_init;
+
+list_id_next : VG list_id   #list_id_nxt
+             |              #list_id_final;
+
+
 
 // operands and operators
-operand : ENTIER #entier
-        | REEL #reel
-        | CHAINE #chaine
-        | id #idt;
+constant : ENTIER          #entier
+         | REEL            #reel
+         | CHAINE          #chaine;
+
+operand : constant         #constantT
+        | id               #idt;
+
 
 operator : PLUS | MOINS | DIV | MUL;
 
@@ -103,6 +111,7 @@ else_ : || ELSE AO body AF;
 do_ : DO AO body AF WHILE PO condition PF;
 
 //read
+
 read_: READ PO id PF PV;
 
 
@@ -110,6 +119,7 @@ read_: READ PO id PF PV;
 //print
 content : CHAINE | id;
 print_: PRINT PO content PF PV;
+
 
 
 // instruction
@@ -121,3 +131,4 @@ instruction :   affectation PV
 
 // Body
 body: instruction body ||;
+

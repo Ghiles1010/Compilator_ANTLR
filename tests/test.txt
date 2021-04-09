@@ -8,23 +8,37 @@ compil Algorithme()
        comment
     */
 
-    intCompil car, Iyu, z, I;
-    floatCompil lp ;
-    intCompil str, j, x, i;
-    stringCompil a;
+
+    intCompil str, j = 3, x, i;
+    stringCompil a = "Hi";
+
 
     start
 
+        a = "hi";
 
-        z = I;
-        i= Iyu;
-
-
+        //b = 3;
 
         i = 2 + 2 * 3 / (5 - 9);
 
-        scanCompil(x);
-        printCompil(x);
+        do{
+
+           a="souad";
+
+        }while(i>0)
+
+        if(j>x) then {
+
+            a="salut";
+        }
+
+        else {
+
+            a="bonsoir";
+        }
+
+        scanCompil(i);
+        printCompil(a);
         printCompil("Hi");
 
 }
